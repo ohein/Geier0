@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="Random" project="Geier Version 3" file="/Geier Version 3/src/Random.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="770" y="297"/>    
+    <position height="-1" width="-1" x="645" y="330"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="Geier" project="Geier Version 3" file="/Geier Version 3/src/Geier.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="455" y="457"/>    
+    <position height="-1" width="-1" x="638" y="492"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="HolsDerGeier" project="Geier Version 3" 
     file="/Geier Version 3/src/HolsDerGeier.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="315" width="275" x="310" y="34"/>    
+    <position height="-1" width="-1" x="349" y="391"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,48 +30,57 @@
   </class>  
   <class id="4" language="java" name="QuickAndDirty" project="Geier Version 3" 
     file="/Geier Version 3/src/QuickAndDirty.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="757" y="109"/>    
+    <position height="-1" width="-1" x="591" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="5">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="6" name="random"/>      
-      <multiplicity id="7" minimum="0" maximum="1"/>    
+  <class id="5" language="java" name="StartGeier" project="Geier Version 3" file="/Geier Version 3/src/StartGeier.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="339" y="90"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="6">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="7" name="myHolsDerGeier"/>      
+      <multiplicity id="8" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="8">    
-    <bendpoint x="615" y="34"/>    
+  <generalization id="9">    
+    <bendpoint x="517" y="234"/>    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <association id="9">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="10" name="myHolsDerGeier"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="12">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="myHolsDerGeier"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="15">    
+  <association id="10">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="16" name="geier"/>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
+      <attribute id="11" name="geier"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="13">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="14" name="myHolsDerGeier"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="17" name="random"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

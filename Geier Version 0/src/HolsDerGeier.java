@@ -10,19 +10,20 @@ public class HolsDerGeier {
 	private ArrayList<Integer> nochZuVergebendeGeierKarten = new ArrayList<Integer>();
 
 	/* Hier stehen die vom Computer gespielten Karten */
-	private ArrayList<Integer> vonRandomGespielteKarten = new ArrayList<Integer>();
+	private ArrayList<Integer> gespielteKarten = new ArrayList<Integer>();
+	/* Hier stehen die Karten, die noch nicht vom Compuert gespielt wurden */
+	private ArrayList<Integer> nochNichtGespielt = new ArrayList<Integer>();
 
 	/* Hier stehen die vom Geier gespielten Karten */
-	private ArrayList<Integer> vomGeierGespielteKarten = new ArrayList<Integer>();
+	private ArrayList<Integer> vomGegnerGespielteKarten = new ArrayList<Integer>();
 
 	/* Punktestaende */
 	private int punkte;
-	private int randomPunkte;
-	private int geierPunkte;
+	private int meinePunkte;
+	private int gegnersPunkte;
 
 	/* Das ist die Referenz Ihr Objekt */
-	private Geier geier;
-	private Random random;
+	private Geier geier = new Geier();
 
 	/**
 	 * Hier definieren Sie den Konstruktor fuer Objekte Ihrer Klasse (falls Sie
@@ -40,8 +41,21 @@ public class HolsDerGeier {
 			if (i != 0) {
 				nochZuVergebendeGeierKarten.add(i);
 			}
-		geier = new Geier(this);
-		random = new QuickAndDirty(this);
+		// Meine Karten
+		for (int i = 1; i <= 15; i++)
+			nochNichtGespielt.add(i);
+
+	}
+
+	/**
+	 * Spiele zufaellig eine Karte
+	 */
+	private int spieleZufallskarte() {
+		int nochVorhanden = nochNichtGespielt.size();
+		int index = (int) (Math.random() * nochVorhanden);
+		int ret = nochNichtGespielt.remove(index);
+		System.out.println(index + " " + ret);
+		return ret;
 	}
 
 	/**
@@ -55,30 +69,21 @@ public class HolsDerGeier {
 	}
 
 	/**
-	 * Hier kann nach dem letzten Zug gefragt werden. Aber diese Methode ist so
-	 * eigentlich nciht wirklich gelungen.
+	 * Hier koennen Sie nach meinem letzten Zug fragen
 	 */
-	public int letzterZug(int nummer) {
-		if (nummer == 0)
-			if (vonRandomGespielteKarten.size() > 0)
-				return vonRandomGespielteKarten.get(vonRandomGespielteKarten.size() - 1);
-			else
-				return -99;
-		else if (vomGeierGespielteKarten.size() > 0)
-			return vomGeierGespielteKarten.get(vomGeierGespielteKarten.size() - 1);
-		else
-			return -99;
+	public int letzerZug() {
+		return gespielteKarten.get(gespielteKarten.size() - 1);
 	}
 
 	/**
 	 * Alles auf Null
 	 */
 	private void reset() {
-		vomGeierGespielteKarten.clear();
-		vonRandomGespielteKarten.clear();
+		gespielteKarten.clear();
+		vomGegnerGespielteKarten.clear();
 		ladeSpiel();
-		randomPunkte = 0;
-		geierPunkte = 0;
+		meinePunkte = 0;
+		gegnersPunkte = 0;
 	}
 
 	/**
@@ -102,57 +107,43 @@ public class HolsDerGeier {
 
 			// naechste Geier- Maeusekarte
 			int naechsteKarte = spieleNaechsteKarte();
-			punkte += naechsteKarte;
+			punkte = punkte += naechsteKarte;
 
-			// die Züge der beiden Spieler
-			int randomZug = random.gibKarte(naechsteKarte);
-			int geierZug = geier.gibKarte(naechsteKarte);
+			// Zufallszug des Computers
+			int meinZug = spieleZufallskarte();
 
-			// Sicher ist sicher: Haben Sie diese Karten schon einmal gespielt?
+			// Aufurf Ihrer Methide!!!!
+			int derGegner = geier.gibKarte(naechsteKarte);
+
+			// Sicher ist sicher: Haben Sie diese karten schon einmal gespeilt?
 			// Wenn ja: Jetzt ist aber Schluss
 			// Wenn nein: Ich merke mit die Karte
-			if (vomGeierGespielteKarten.contains(geierZug))
-				throw new Exception("GESCHUMMELT: Diese Karte wurde bereits gespielt");
+			if (vomGegnerGespielteKarten.contains(derGegner))
+				throw new Exception("GESCHUMMELT");
 			else
-				vomGeierGespielteKarten.add(geierZug);
-
-			if ((geierZug < 1) || (geierZug > 15))
-				throw new Exception("GESCHUMMELT: Diese Karte gibt es gar nicht");
+				vomGegnerGespielteKarten.add(derGegner);
 
 			// Ich merke mir auch meinen Zug, falls Sie mich fragen wollen
-			if (vonRandomGespielteKarten.contains(randomZug))
-				throw new Exception("GESCHUMMELT: Diese Karte wurde bereits gespielt");
-			else
-				vonRandomGespielteKarten.add(randomZug);
-
-			if ((randomZug < 1) || (randomZug > 15))
-				throw new Exception("GESCHUMMELT: Diese Karte gibt es gar nicht");
+			gespielteKarten.add(meinZug);
 
 			// So sieht der aktuelle Zug aus
 			System.out.println("Ausgespielte Karte: " + naechsteKarte);
-			System.out.println("Random Karte: " + randomZug);
-			System.out.println("Geier Karte: " + geierZug);
+			System.out.println("Meine Karte: " + meinZug);
+			System.out.println("Ihre Karte: " + derGegner);
 
 			// Wer kriegt die Punkte?
-
-			// Lösung: Es muss zwischen Maeuse- (nachesteKarte>0) und
-			// Geierkarten ((nachesteKarte<0) unterschieden werden.
-			if (randomZug != geierZug) {
-				if (punkte > 0)
-					if (randomZug > geierZug)
-						randomPunkte = randomPunkte + punkte;
-					else
-						geierPunkte = geierPunkte + punkte;
-				else if (randomZug < geierZug)
-					randomPunkte = randomPunkte + punkte;
+			if (meinZug != derGegner) {
+				if (meinZug > derGegner)
+					meinePunkte = meinePunkte + punkte;
 				else
-					geierPunkte = geierPunkte + punkte;
+					gegnersPunkte = gegnersPunkte + punkte;
 				punkte = 0;
 			} else
 				System.out.println("Unentschieden - Punkte wandern in die naechste Runde");
-			System.out.println("Spielstand: " + randomPunkte + " : " + geierPunkte);
+			System.out.println("Spielstand: " + meinePunkte + " : " + gegnersPunkte);
 		} else
 			System.out.println("Spiel ist zu Ende. Sie muessen zuerst die Methode neues Siel aufrufen");
+
 	}
 
 	/**
